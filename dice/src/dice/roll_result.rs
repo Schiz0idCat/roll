@@ -74,7 +74,9 @@ impl PartialOrd for RollResult {
 
 impl std::fmt::Display for RollResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Rolls: {:?}", self.rolls())?;
+        if self.rolls().len() > 1 {
+            writeln!(f, "Rolls: {:?}", self.rolls())?;
+        }
         write!(f, "Total: {}", self.total())
     }
 }
