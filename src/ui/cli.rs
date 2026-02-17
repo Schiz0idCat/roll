@@ -11,7 +11,7 @@ pub struct Cli {
     #[arg(short = 'd', long = "disadvantage", conflicts_with = "advantage")]
     disadvantage: bool,
 
-    /// Notación NdM (e.g.: 3d6, 1d20)
+    /// Notation NdM (e.g.: 3d6, 1d20)
     dice: Option<String>,
 }
 
