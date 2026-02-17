@@ -1,14 +1,20 @@
 use roll::Cli;
-use roll::errors::CliError;
 
 use clap::Parser;
 
-fn main() -> Result<(), CliError> {
+use std::process::ExitCode;
+
+fn main() -> ExitCode {
     let cli = Cli::parse();
-    let roll = cli.try_parse()?;
-    let result = roll.roll();
 
-    println!("{}", result);
-
-    Ok(())
+    match cli.try_parse() {
+        Ok(roll) => {
+            println!("{}", roll.roll());
+            ExitCode::SUCCESS
+        }
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            ExitCode::FAILURE
+        }
+    }
 }
