@@ -1,3 +1,5 @@
+use crate::errors::DieError;
+
 #[derive(Clone, Copy)]
 pub enum Die {
     D4 = 4,
@@ -16,7 +18,7 @@ impl Die {
 }
 
 impl TryFrom<usize> for Die {
-    type Error = &'static str;
+    type Error = DieError;
 
     fn try_from(value: usize) -> Result<Self, Self::Error> {
         match value {
@@ -27,7 +29,7 @@ impl TryFrom<usize> for Die {
             12 => Ok(Die::D12),
             20 => Ok(Die::D20),
             100 => Ok(Die::D100),
-            _ => Err("Unsupported die size"),
+            _ => Err(DieError::DieNotRecognized),
         }
     }
 }

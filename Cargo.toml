@@ -6,6 +6,10 @@ edition = "2024"
 [workspace]
 members = ["dice", "."]
 
+[workspace.dependencies]
+thiserror = "2.0.18"
+
 [dependencies]
 clap = { version = "4.5.58", features = ["derive"] }
 dice = { path = "dice" }
+thiserror = { workspace = true }

@@ -8,14 +8,6 @@ pub struct Roll {
 }
 
 impl Roll {
-    pub fn new_temp(amount: usize, die: Die, roll_type: RollType) -> Self {
-        Self {
-            amount,
-            die,
-            roll_type,
-        }
-    }
-
     pub fn new(amount: usize, die: Die) -> Self {
         Self {
             amount,
