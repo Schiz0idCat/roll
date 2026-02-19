@@ -13,6 +13,6 @@ pub enum CliError {
     #[error("Parse die error. Valid formats: NdM - dM")]
     ParseDie,
 
-    #[error("advantage or disadvantage rolls must use exactly 2 dice")]
+    #[error("advantage or disadvantage rolls may use at most 2 dice")]
     InvalidAdvantageMultiplicity,
 }

@@ -47,7 +47,7 @@ impl Cli {
         let amount: usize = amount.parse().unwrap_or(1);
         let die = Die::try_from(die.parse::<usize>()?)?;
 
-        if amount != 1 && (self.advantage || self.disadvantage) {
+        if amount > 2 && (self.advantage || self.disadvantage) {
             return Err(CliError::InvalidAdvantageMultiplicity);
         }
 
