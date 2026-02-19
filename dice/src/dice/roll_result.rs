@@ -24,8 +24,8 @@ impl RollResult {
     }
 
     /// Returns the rolled die.
-    pub fn die(&self) -> &Die {
-        &self.die
+    pub fn die(&self) -> Die {
+        self.die
     }
 
     /// Returns the computed total of the roll.
@@ -41,11 +41,11 @@ impl RollResult {
 impl From<&Roll> for RollResult {
     /// Executes the given [`Roll`] and produces a `RollResult`.
     fn from(roll: &Roll) -> Self {
-        let die = *roll.die();
+        let die = roll.die();
         let roll_type = roll.roll_type();
 
         let n = match roll_type {
-            RollType::Normal => *roll.amount(),
+            RollType::Normal => roll.amount(),
             RollType::Advantage | RollType::Disadvantage => 2,
         };
 

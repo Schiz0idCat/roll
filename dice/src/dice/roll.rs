@@ -38,13 +38,13 @@ impl Roll {
     }
 
     /// Returns the amount of rolls.
-    pub fn amount(&self) -> &usize {
-        &self.amount
+    pub fn amount(&self) -> usize {
+        self.amount
     }
 
     /// Returns the die to roll.
-    pub fn die(&self) -> &Die {
-        &self.die
+    pub fn die(&self) -> Die {
+        self.die
     }
 
     /// Returns the roll type.

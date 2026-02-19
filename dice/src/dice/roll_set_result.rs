@@ -19,8 +19,8 @@ impl RollSetResult {
     }
 
     /// Returns the aggregated total of all roll results.
-    pub fn total(&self) -> &usize {
-        &self.total
+    pub fn total(&self) -> usize {
+        self.total
     }
 }
 
