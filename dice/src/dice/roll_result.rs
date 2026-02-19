@@ -70,9 +70,6 @@ impl From<&Roll> for RollResult {
 
 impl std::fmt::Display for RollResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.rolls().len() > 1 {
-            writeln!(f, "Rolls: {:?}", self.rolls())?;
-        }
-        write!(f, "Total: {}", self.total())
+        writeln!(f, "{}: {:?} -> {}", self.die(), self.rolls(), self.total())
     }
 }

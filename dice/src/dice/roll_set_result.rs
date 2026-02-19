@@ -28,13 +28,7 @@ impl From<&RollSet> for RollSetResult {
 impl std::fmt::Display for RollSetResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for result in self.results.iter() {
-            writeln!(
-                f,
-                "{}: {:?} -> {}",
-                result.die(),
-                result.rolls(),
-                result.total()
-            )?;
+            write!(f, "{}", result)?;
         }
 
         write!(f, "Total: {}", self.total)
