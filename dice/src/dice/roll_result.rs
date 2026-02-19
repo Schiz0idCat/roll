@@ -2,7 +2,7 @@ use crate::{Roll, RollType};
 
 use rand::random_range;
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone)]
 pub struct RollResult {
     rolls: Vec<usize>,
     total: usize,
