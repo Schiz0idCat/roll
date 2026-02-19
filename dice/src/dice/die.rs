@@ -12,8 +12,8 @@ pub enum Die {
 }
 
 impl Die {
-    pub fn sides(self) -> usize {
-        self as usize
+    pub fn sides(&self) -> usize {
+        *self as usize
     }
 }
 
