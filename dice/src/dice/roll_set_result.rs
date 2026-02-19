@@ -6,12 +6,12 @@ pub struct RollSetResult {
 }
 
 impl RollSetResult {
-    pub fn results(&self) -> Vec<RollResult> {
-        self.results.clone()
+    pub fn results(&self) -> &[RollResult] {
+        &self.results
     }
 
-    pub fn total(&self) -> usize {
-        self.total
+    pub fn total(&self) -> &usize {
+        &self.total
     }
 }
 

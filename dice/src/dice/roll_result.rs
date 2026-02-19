@@ -2,7 +2,6 @@ use crate::{Die, Roll, RollType};
 
 use rand::random_range;
 
-#[derive(Clone)]
 pub struct RollResult {
     rolls: Vec<usize>,
     die: Die,
@@ -10,16 +9,16 @@ pub struct RollResult {
 }
 
 impl RollResult {
-    pub fn rolls(&self) -> Vec<usize> {
-        self.rolls.clone()
+    pub fn rolls(&self) -> &[usize] {
+        &self.rolls
     }
 
-    pub fn die(&self) -> Die {
-        self.die
+    pub fn die(&self) -> &Die {
+        &self.die
     }
 
-    pub fn total(&self) -> usize {
-        self.total
+    pub fn total(&self) -> &usize {
+        &self.total
     }
 }
 
@@ -27,7 +26,7 @@ impl From<&Roll> for RollResult {
     fn from(roll: &Roll) -> Self {
         match roll.roll_type() {
             RollType::Normal => {
-                let rolls: Vec<usize> = (0..roll.amount())
+                let rolls: Vec<usize> = (0..*roll.amount())
                     .map(|_| random_range(1..=roll.die().sides()))
                     .collect();
 
@@ -35,7 +34,7 @@ impl From<&Roll> for RollResult {
 
                 Self {
                     rolls,
-                    die: roll.die(),
+                    die: *roll.die(),
                     total,
                 }
             }
@@ -48,7 +47,7 @@ impl From<&Roll> for RollResult {
 
                 Self {
                     rolls,
-                    die: roll.die(),
+                    die: *roll.die(),
                     total,
                 }
             }
@@ -61,7 +60,7 @@ impl From<&Roll> for RollResult {
 
                 Self {
                     rolls,
-                    die: roll.die(),
+                    die: *roll.die(),
                     total,
                 }
             }

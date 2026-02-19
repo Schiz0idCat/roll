@@ -1,6 +1,5 @@
 use super::{Roll, RollSetResult, Rollable};
 
-#[derive(Clone)]
 pub struct RollSet(Vec<Roll>);
 
 impl RollSet {
@@ -8,8 +7,8 @@ impl RollSet {
         Self(rolls)
     }
 
-    pub fn rolls(&self) -> Vec<Roll> {
-        self.0.clone()
+    pub fn rolls(&self) -> &[Roll] {
+        &self.0
     }
 }
 
