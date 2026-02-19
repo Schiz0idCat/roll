@@ -49,5 +49,5 @@ roll -a 2d20
 roll --advantage d20
 
 roll -d 20
-roll -disadvantage      # if no die specidied, use a d20 by default 
+roll -disadvantage      # if no die specified, use a d20 by default 
 ```
