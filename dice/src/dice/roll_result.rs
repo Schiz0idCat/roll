@@ -15,6 +15,9 @@ pub struct RollResult {
 
     /// Total sum of all dice.
     total: usize,
+
+    /// Bonus to the result roll
+    bonus: usize,
 }
 
 impl RollResult {
@@ -36,6 +39,11 @@ impl RollResult {
     pub fn total(&self) -> &usize {
         &self.total
     }
+
+    /// Returns the bonus of the roll
+    pub fn bonus(&self) -> usize {
+        self.bonus
+    }
 }
 
 impl From<&Roll> for RollResult {
@@ -43,6 +51,7 @@ impl From<&Roll> for RollResult {
     fn from(roll: &Roll) -> Self {
         let die = roll.die();
         let roll_type = roll.roll_type();
+        let bonus = roll.bonus();
 
         let n = match roll_type {
             RollType::Normal => roll.amount(),
@@ -51,13 +60,19 @@ impl From<&Roll> for RollResult {
 
         let rolls: Vec<usize> = (0..n).map(|_| random_range(1..=die.sides())).collect();
 
-        let total = match roll_type {
-            RollType::Normal => rolls.iter().sum(),
-            RollType::Advantage => *rolls.iter().max().unwrap(),
-            RollType::Disadvantage => *rolls.iter().min().unwrap(),
-        };
+        let total = bonus
+            + match roll_type {
+                RollType::Normal => rolls.iter().sum(),
+                RollType::Advantage => *rolls.iter().max().unwrap(),
+                RollType::Disadvantage => *rolls.iter().min().unwrap(),
+            };
 
-        Self { rolls, die, total }
+        Self {
+            rolls,
+            die,
+            total,
+            bonus,
+        }
     }
 }
 

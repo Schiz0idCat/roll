@@ -13,15 +13,19 @@ pub struct Roll {
 
     /// Normal, advantage or disadvantage roll.
     roll_type: RollType,
+
+    /// Bonus to the result roll
+    bonus: usize,
 }
 
 impl Roll {
     /// Returns roll data of a normal roll
-    pub fn new(amount: usize, die: Die) -> Self {
+    pub fn new(amount: usize, die: Die, bonus: usize) -> Self {
         Self {
             amount,
             die,
             roll_type: RollType::Normal,
+            bonus,
         }
     }
 
@@ -29,11 +33,12 @@ impl Roll {
     ///
     /// The amount is implicitly set to `1`, since advantage and disadvantage
     /// rolls in D&D apply to a single die.
-    pub fn new_with_type(die: Die, roll_type: RollType) -> Self {
+    pub fn new_with_type(die: Die, roll_type: RollType, bonus: usize) -> Self {
         Self {
             amount: 1,
             die,
             roll_type,
+            bonus,
         }
     }
 
@@ -50,6 +55,11 @@ impl Roll {
     /// Returns the roll type.
     pub fn roll_type(&self) -> &RollType {
         &self.roll_type
+    }
+
+    /// Returns the bonus of the roll
+    pub fn bonus(&self) -> usize {
+        self.bonus
     }
 }
 
@@ -69,7 +79,7 @@ mod tests {
     #[test]
     fn roll_n_returns_correct_length() {
         let n = 5;
-        let result = Roll::new(n, Die::D8).roll();
+        let result = Roll::new(n, Die::D8, 0).roll();
 
         assert_eq!(result.rolls().len(), n);
     }
@@ -77,7 +87,7 @@ mod tests {
     #[test]
     fn roll_n_values_are_in_range() {
         let n = 100;
-        let result = Roll::new(n, Die::D10).roll();
+        let result = Roll::new(n, Die::D10, 0).roll();
 
         for value in result.rolls() {
             assert!(*value >= 1);
@@ -87,7 +97,7 @@ mod tests {
 
     #[test]
     fn roll_advantage() {
-        let result = Roll::new_with_type(Die::D20, RollType::Advantage).roll();
+        let result = Roll::new_with_type(Die::D20, RollType::Advantage, 0).roll();
 
         assert!(result.rolls()[0] >= 1 && result.rolls()[0] <= 20);
         assert!(result.rolls()[1] >= 1 && result.rolls()[1] <= 20);
@@ -97,7 +107,7 @@ mod tests {
 
     #[test]
     fn roll_disadvantage() {
-        let result = Roll::new_with_type(Die::D20, RollType::Disadvantage).roll();
+        let result = Roll::new_with_type(Die::D20, RollType::Disadvantage, 0).roll();
 
         assert!(result.rolls()[0] >= 1 && result.rolls()[0] <= 20);
         assert!(result.rolls()[1] >= 1 && result.rolls()[1] <= 20);
