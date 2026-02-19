@@ -1,3 +1,4 @@
+use dice::Rollable;
 use roll::Cli;
 
 use clap::Parser;
@@ -8,8 +9,8 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
 
     match cli.try_parse() {
-        Ok(roll) => {
-            println!("{}", roll.roll());
+        Ok(rolls) => {
+            println!("{}", rolls.roll());
             ExitCode::SUCCESS
         }
         Err(e) => {

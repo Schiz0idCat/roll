@@ -1,4 +1,4 @@
-use super::{Die, RollResult, RollType};
+use super::{Die, RollResult, RollType, Rollable};
 
 #[derive(Clone)]
 pub struct Roll {
@@ -43,9 +43,13 @@ impl Roll {
     pub fn roll_type(&self) -> RollType {
         self.roll_type
     }
+}
 
-    pub fn roll(&self) -> RollResult {
-        RollResult::from(self.clone())
+impl Rollable for Roll {
+    type Output = RollResult;
+
+    fn roll(&self) -> Self::Output {
+        RollResult::from(self)
     }
 }
 

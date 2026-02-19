@@ -4,7 +4,7 @@ use std::cmp::Ordering;
 
 use rand::random_range;
 
-#[derive(PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct RollResult {
     rolls: Vec<usize>,
     total: usize,
@@ -27,18 +27,17 @@ impl RollResult {
     }
 }
 
-impl From<Roll> for RollResult {
-    fn from(roll: Roll) -> Self {
+impl From<&Roll> for RollResult {
+    fn from(roll: &Roll) -> Self {
         match roll.roll_type() {
             RollType::Normal => {
                 let rolls: Vec<usize> = (0..roll.amount())
                     .map(|_| random_range(1..=roll.die().sides()))
                     .collect();
 
-                Self {
-                    rolls: rolls.clone(),
-                    total: rolls.iter().sum(),
-                }
+                let total = rolls.iter().sum();
+
+                Self { rolls, total }
             }
             RollType::Advantage => {
                 let rolls: Vec<usize> = (0..2)
@@ -46,6 +45,7 @@ impl From<Roll> for RollResult {
                     .collect();
 
                 let total = *rolls.iter().max().unwrap();
+
                 Self { rolls, total }
             }
             RollType::Disadvantage => {
@@ -54,6 +54,7 @@ impl From<Roll> for RollResult {
                     .collect();
 
                 let total = *rolls.iter().min().unwrap();
+
                 Self { rolls, total }
             }
         }
