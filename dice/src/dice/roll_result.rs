@@ -1,7 +1,5 @@
 use crate::{Roll, RollType};
 
-use std::cmp::Ordering;
-
 use rand::random_range;
 
 #[derive(Clone, PartialEq, Eq)]
@@ -51,18 +49,6 @@ impl From<&Roll> for RollResult {
                 Self { rolls, total }
             }
         }
-    }
-}
-
-impl Ord for RollResult {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.total.cmp(&other.total)
-    }
-}
-
-impl PartialOrd for RollResult {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
     }
 }
 
