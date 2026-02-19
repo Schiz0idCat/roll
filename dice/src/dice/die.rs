@@ -36,14 +36,6 @@ impl TryFrom<usize> for Die {
 
 impl std::fmt::Display for Die {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Die::D4 => write!(f, "D4"),
-            Die::D6 => write!(f, "D6"),
-            Die::D8 => write!(f, "D8"),
-            Die::D10 => write!(f, "D10"),
-            Die::D12 => write!(f, "D12"),
-            Die::D20 => write!(f, "D20"),
-            Die::D100 => write!(f, "D100"),
-        }
+        write!(f, "D{}", *self as usize)
     }
 }
