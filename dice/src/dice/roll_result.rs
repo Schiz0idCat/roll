@@ -11,13 +11,6 @@ pub struct RollResult {
 }
 
 impl RollResult {
-    pub fn new(rolls: Vec<usize>) -> Self {
-        Self {
-            rolls: rolls.clone(),
-            total: rolls.iter().sum(),
-        }
-    }
-
     pub fn rolls(&self) -> Vec<usize> {
         self.rolls.clone()
     }
