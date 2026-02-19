@@ -7,7 +7,6 @@ Supports:
 - Advantage and Disadvantage rolls.
 - Heterogeneous roll sets (`3d6 2d8 1d10`)
 
-
 ---
 
 ## Index
