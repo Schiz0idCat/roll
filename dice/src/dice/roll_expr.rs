@@ -1,5 +1,20 @@
 use super::{Roll, RollOutput, RollSet, Rollable};
 
+/// A polymorphic dice roll expression.
+///
+/// `RollExpr` allows treating both [`Roll`] and [`RollSet`] as a single
+/// rollable entity. When executed, it produces a [`RollOutput`],
+/// which may contain either a [`RollResult`](super::RollResult)
+/// or a [`RollSetResult`](super::RollSetResult).
+///
+/// # Example
+///
+/// ```
+/// use dice::{RollExpr, Roll, Die};
+///
+/// let expr = RollExpr::Single(Roll::new(1, Die::D6));
+/// let result = expr.roll();
+/// ```
 pub enum RollExpr {
     Single(Roll),
     Set(RollSet),

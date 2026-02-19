@@ -1,5 +1,10 @@
 use super::{RollResult, RollSetResult};
 
+/// A polymorphic roll result.
+///
+/// `RollOutput` is produced when executing a [`RollExpr`](super::RollExpr).
+/// It contains either a [`RollResult`] for a single roll,
+/// or a [`RollSetResult`] for a roll set.
 pub enum RollOutput {
     Single(RollResult),
     Set(RollSetResult),

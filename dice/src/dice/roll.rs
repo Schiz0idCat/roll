@@ -1,12 +1,22 @@
 use super::{Die, RollResult, RollType, Rollable};
 
+/// Represents a dice roll configuration.
+///
+/// A `Roll` describes how many dice are rolled, which die is used,
+/// and whether the roll is normal, with advantage, or with disadvantage.
 pub struct Roll {
+    /// Dice amount to roll.
     amount: usize,
+
+    /// Die type to roll.
     die: Die,
+
+    /// Normal, advantage or disadvantage roll.
     roll_type: RollType,
 }
 
 impl Roll {
+    /// Returns roll data of a normal roll
     pub fn new(amount: usize, die: Die) -> Self {
         Self {
             amount,
@@ -15,14 +25,10 @@ impl Roll {
         }
     }
 
-    pub fn new_single(die: Die) -> Self {
-        Self {
-            amount: 1,
-            die,
-            roll_type: RollType::Normal,
-        }
-    }
-
+    /// Creates a roll with a specific [`RollType`].
+    ///
+    /// The amount is implicitly set to `1`, since advantage and disadvantage
+    /// rolls in D&D apply to a single die.
     pub fn new_with_type(die: Die, roll_type: RollType) -> Self {
         Self {
             amount: 1,
@@ -31,14 +37,17 @@ impl Roll {
         }
     }
 
+    /// Returns the amount of rolls.
     pub fn amount(&self) -> &usize {
         &self.amount
     }
 
+    /// Returns the die to roll.
     pub fn die(&self) -> &Die {
         &self.die
     }
 
+    /// Returns the roll type.
     pub fn roll_type(&self) -> &RollType {
         &self.roll_type
     }
@@ -47,6 +56,7 @@ impl Roll {
 impl Rollable for Roll {
     type Output = RollResult;
 
+    /// Executes the roll and returns a [`RollResult`].
     fn roll(&self) -> Self::Output {
         RollResult::from(self)
     }
@@ -55,16 +65,6 @@ impl Rollable for Roll {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn roll_returns_single_result() {
-        let result = Roll::new_single(Die::D6).roll();
-
-        assert_eq!(result.rolls().len(), 1);
-        assert_eq!(result.total(), &result.rolls()[0]);
-        assert!(result.rolls()[0] >= 1);
-        assert!(result.rolls()[0] <= Die::D6.sides());
-    }
 
     #[test]
     fn roll_n_returns_correct_length() {

@@ -1,6 +1,7 @@
 use crate::errors::DieError;
 
-#[derive(Clone, Copy)]
+/// Represents all types DnD dice.
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Die {
     D4 = 4,
     D6 = 6,
@@ -12,6 +13,18 @@ pub enum Die {
 }
 
 impl Die {
+    /// Returns the number of sides of the die.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use dice::Die;
+    ///
+    /// let die = Die::D12;
+    /// let sides = die.sides();
+    ///
+    /// assert_eq!(sides, 12);
+    /// ```
     pub fn sides(&self) -> usize {
         *self as usize
     }
@@ -20,6 +33,20 @@ impl Die {
 impl TryFrom<usize> for Die {
     type Error = DieError;
 
+    /// Attempts to convert a number of sides into a [`Die`].
+    ///
+    /// Returns [`DieError`] if the number does not match a supported die.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use dice::Die;
+    ///
+    /// let d20 = Die::try_from(20).unwrap();
+    ///
+    /// assert_eq!(d20, Die::D20);
+    /// assert_eq!(d20.sides(), 20);
+    /// ```
     fn try_from(value: usize) -> Result<Self, Self::Error> {
         match value {
             4 => Ok(Die::D4),
@@ -36,6 +63,6 @@ impl TryFrom<usize> for Die {
 
 impl std::fmt::Display for Die {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "D{}", *self as usize)
+        write!(f, "d{}", *self as usize)
     }
 }
