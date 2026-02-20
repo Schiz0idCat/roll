@@ -17,7 +17,7 @@ pub struct RollResult {
     total: usize,
 
     /// Bonus to the result roll
-    bonus: usize,
+    bonus: isize,
 }
 
 impl RollResult {
@@ -41,7 +41,7 @@ impl RollResult {
     }
 
     /// Returns the bonus of the roll
-    pub fn bonus(&self) -> usize {
+    pub fn bonus(&self) -> isize {
         self.bonus
     }
 }
@@ -60,12 +60,17 @@ impl From<&Roll> for RollResult {
 
         let rolls: Vec<usize> = (0..n).map(|_| random_range(1..=die.sides())).collect();
 
-        let total = bonus
-            + match roll_type {
-                RollType::Normal => rolls.iter().sum(),
-                RollType::Advantage => *rolls.iter().max().unwrap(),
-                RollType::Disadvantage => *rolls.iter().min().unwrap(),
-            };
+        let total = match roll_type {
+            RollType::Normal => rolls.iter().sum(),
+            RollType::Advantage => *rolls.iter().max().unwrap(),
+            RollType::Disadvantage => *rolls.iter().min().unwrap(),
+        };
+
+        let total = if bonus >= 0 {
+            total.saturating_add(bonus as usize)
+        } else {
+            total.saturating_sub((-bonus) as usize)
+        };
 
         Self {
             rolls,
