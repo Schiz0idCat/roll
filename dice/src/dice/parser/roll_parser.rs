@@ -38,6 +38,10 @@ impl FromStr for RollParser {
         let components = Components::from_str(&components)?;
         let extra = Extra::try_from(components)?;
 
+        if amount > 2 && (extra.advantage || extra.disadvantage) {
+            panic!("adv/dis require at most 2 dice")
+        }
+
         Ok(Self { die, amount, extra })
     }
 }
