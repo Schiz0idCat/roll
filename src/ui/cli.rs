@@ -7,10 +7,18 @@ use std::str::FromStr;
 
 #[derive(Parser)]
 pub struct Cli {
-    #[arg(short = 'a', long = "advantage", conflicts_with = "disadvantage")]
+    #[arg(
+        short = 'a',
+        long = "advantage",
+        conflicts_with_all = ["disadvantage", "dice"]
+    )]
     advantage: bool,
 
-    #[arg(short = 'd', long = "disadvantage", conflicts_with = "advantage")]
+    #[arg(
+        short = 'd',
+        long = "disadvantage",
+        conflicts_with_all = ["advantage", "dice"]
+    )]
     disadvantage: bool,
 
     /// Notation NdM (e.g.: 3d6, d20, 12, 3d6 2d8 1d12)
@@ -19,16 +27,14 @@ pub struct Cli {
 
 impl Cli {
     pub fn try_parse(&self) -> Result<RollExpr, CliError> {
-        if self.dice.is_empty() {
-            if self.advantage || self.disadvantage {
-                return Ok(RollExpr::Single(Roll::new_with_type(
-                    Die::D20,
-                    self.roll_type(),
-                    0,
-                )));
-            }
+        let roll_type = self.roll_type();
 
-            return Err(CliError::ParseDie);
+        if roll_type != RollType::Normal {
+            return Ok(RollExpr::Single(Roll::new_with_type(
+                Die::D20,
+                roll_type,
+                0,
+            )));
         }
 
         let mut rolls = Vec::with_capacity(self.dice.len());
@@ -37,10 +43,12 @@ impl Cli {
             rolls.push(Roll::from_str(dice).unwrap());
         }
 
-        if rolls.len() == 1 {
-            Ok(RollExpr::Single(rolls.pop().unwrap()))
+        let rolls = RollSet::new(rolls);
+
+        if rolls.rolls().len() == 1 {
+            Ok(RollExpr::Single(rolls.rolls()[0].clone()))
         } else {
-            Ok(RollExpr::Set(RollSet::new(rolls)))
+            Ok(RollExpr::Set(rolls))
         }
     }
 

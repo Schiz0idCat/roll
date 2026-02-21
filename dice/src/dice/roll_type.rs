@@ -3,6 +3,7 @@
 /// - `Normal`: sum of all dice.
 /// - `Advantage`: roll two dice and use the highest value.
 /// - `Disadvantage`: roll two dice and use the lowest value.
+#[derive(Clone, Copy, PartialEq)]
 pub enum RollType {
     /// Make a normal roll.
     Normal,

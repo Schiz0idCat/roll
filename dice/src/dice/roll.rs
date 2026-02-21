@@ -8,6 +8,7 @@ use std::str::FromStr;
 ///
 /// A `Roll` describes how many dice are rolled, which die is used,
 /// and whether the roll is normal, with advantage, or with disadvantage.
+#[derive(Clone)]
 pub struct Roll {
     /// Dice amount to roll.
     amount: usize,
