@@ -45,12 +45,10 @@ impl Cli {
     }
 
     fn roll_type(&self) -> RollType {
-        if self.advantage {
-            RollType::Advantage
-        } else if self.disadvantage {
-            RollType::Disadvantage
-        } else {
-            RollType::Normal
+        match (self.advantage, self.disadvantage) {
+            (true, false) => RollType::Advantage,
+            (false, true) => RollType::Disadvantage,
+            _ => RollType::Normal,
         }
     }
 }
