@@ -1,4 +1,8 @@
+use super::parser::RollParser;
 use super::{Die, RollResult, RollType, Rollable};
+
+use std::convert::Infallible;
+use std::str::FromStr;
 
 /// Represents a dice roll configuration.
 ///
@@ -57,7 +61,7 @@ impl Roll {
         &self.roll_type
     }
 
-    /// Returns the bonus of the roll
+    /// Returns the modifier.
     pub fn modifier(&self) -> isize {
         self.modifier
     }
@@ -69,6 +73,34 @@ impl Rollable for Roll {
     /// Executes the roll and returns a [`RollResult`].
     fn roll(&self) -> Self::Output {
         RollResult::from(self)
+    }
+}
+
+impl From<RollParser> for Roll {
+    fn from(parser: RollParser) -> Self {
+        let amount = parser.amount;
+        let die = parser.die;
+        let roll_type = match (parser.extra.advantage, parser.extra.disadvantage) {
+            (true, false) => RollType::Advantage,
+            (false, true) => RollType::Disadvantage,
+            _ => RollType::Normal,
+        };
+        let modifier = parser.extra.modifier;
+
+        match roll_type {
+            RollType::Normal => Self::new(amount, die, modifier),
+            _ => Self::new_with_type(die, roll_type, modifier),
+        }
+    }
+}
+
+impl FromStr for Roll {
+    type Err = Infallible;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let parser = RollParser::from_str(s).unwrap();
+
+        Ok(Roll::from(parser))
     }
 }
 

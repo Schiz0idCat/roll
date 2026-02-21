@@ -1,4 +1,5 @@
 mod die;
+pub mod parser;
 mod roll;
 mod roll_expr;
 mod roll_output;
