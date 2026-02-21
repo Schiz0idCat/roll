@@ -15,17 +15,17 @@ pub struct Roll {
     roll_type: RollType,
 
     /// Bonus to the result roll
-    bonus: isize,
+    modifier: isize,
 }
 
 impl Roll {
     /// Returns roll data of a normal roll
-    pub fn new(amount: usize, die: Die, bonus: isize) -> Self {
+    pub fn new(amount: usize, die: Die, modifier: isize) -> Self {
         Self {
             amount,
             die,
             roll_type: RollType::Normal,
-            bonus,
+            modifier,
         }
     }
 
@@ -33,12 +33,12 @@ impl Roll {
     ///
     /// The amount is implicitly set to `1`, since advantage and disadvantage
     /// rolls in D&D apply to a single die.
-    pub fn new_with_type(die: Die, roll_type: RollType, bonus: isize) -> Self {
+    pub fn new_with_type(die: Die, roll_type: RollType, modifier: isize) -> Self {
         Self {
             amount: 1,
             die,
             roll_type,
-            bonus,
+            modifier,
         }
     }
 
@@ -58,8 +58,8 @@ impl Roll {
     }
 
     /// Returns the bonus of the roll
-    pub fn bonus(&self) -> isize {
-        self.bonus
+    pub fn modifier(&self) -> isize {
+        self.modifier
     }
 }
 

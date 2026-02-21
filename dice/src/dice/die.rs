@@ -61,6 +61,23 @@ impl TryFrom<usize> for Die {
     }
 }
 
+impl std::str::FromStr for Die {
+    type Err = DieError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "4" => Ok(Die::D4),
+            "6" => Ok(Die::D6),
+            "8" => Ok(Die::D8),
+            "10" => Ok(Die::D10),
+            "12" => Ok(Die::D12),
+            "20" => Ok(Die::D20),
+            "100" => Ok(Die::D100),
+            _ => Err(DieError::DieNotRecognized),
+        }
+    }
+}
+
 impl std::fmt::Display for Die {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "d{}", *self as usize)

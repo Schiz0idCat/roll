@@ -17,7 +17,7 @@ pub struct RollResult {
     total: usize,
 
     /// Bonus to the result roll
-    bonus: isize,
+    modifier: isize,
 }
 
 impl RollResult {
@@ -41,8 +41,8 @@ impl RollResult {
     }
 
     /// Returns the bonus of the roll
-    pub fn bonus(&self) -> isize {
-        self.bonus
+    pub fn modifier(&self) -> isize {
+        self.modifier
     }
 }
 
@@ -51,7 +51,7 @@ impl From<&Roll> for RollResult {
     fn from(roll: &Roll) -> Self {
         let die = roll.die();
         let roll_type = roll.roll_type();
-        let bonus = roll.bonus();
+        let bonus = roll.modifier();
 
         let n = match roll_type {
             RollType::Normal => roll.amount(),
@@ -76,7 +76,7 @@ impl From<&Roll> for RollResult {
             rolls,
             die,
             total,
-            bonus,
+            modifier: bonus,
         }
     }
 }
