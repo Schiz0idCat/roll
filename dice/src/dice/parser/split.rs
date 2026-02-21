@@ -27,16 +27,18 @@ impl FromStr for Split {
             None => (None, s),
         };
 
-        // rest of the chars
-        let mut chars = rest.chars();
-
         // take the sides
-        let digits: String = chars.by_ref().take_while(|c| c.is_ascii_digit()).collect();
-        let sides = (!digits.is_empty()).then_some(digits);
+        let digits_end = rest
+            .char_indices()
+            .position(|(_, c)| !c.is_ascii_digit())
+            .unwrap_or(rest.len());
+
+        let (digits, components) = rest.split_at(digits_end);
+
+        let sides = (!digits.is_empty()).then_some(digits.to_string());
 
         // extra parameters
-        let components: String = chars.collect();
-        let components = (!components.is_empty()).then_some(components);
+        let components = (!components.is_empty()).then_some(components.to_string());
 
         Ok(Split::new(amount, sides, components))
     }

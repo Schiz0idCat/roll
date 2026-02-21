@@ -9,7 +9,7 @@ pub struct RollSetResult {
     results: Vec<RollResult>,
 
     /// Aggregated total of all contained roll results.
-    total: usize,
+    total: isize,
 }
 
 impl RollSetResult {
@@ -19,7 +19,7 @@ impl RollSetResult {
     }
 
     /// Returns the aggregated total of all roll results.
-    pub fn total(&self) -> usize {
+    pub fn total(&self) -> isize {
         self.total
     }
 }

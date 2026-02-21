@@ -16,7 +16,7 @@ pub struct RollResult {
     /// Total sum of all dice.
     total: usize,
 
-    /// Bonus to the result roll
+    /// Value to modify the result amount
     modifier: isize,
 }
 
@@ -36,11 +36,11 @@ impl RollResult {
     /// For normal rolls this is the sum of all dice.
     /// For advantage or disadvantage rolls, this is
     /// respectively the highest or lowest value.
-    pub fn total(&self) -> &usize {
-        &self.total
+    pub fn total(&self) -> usize {
+        self.total
     }
 
-    /// Returns the bonus of the roll
+    /// Returns the modifier.
     pub fn modifier(&self) -> isize {
         self.modifier
     }
@@ -51,7 +51,7 @@ impl From<&Roll> for RollResult {
     fn from(roll: &Roll) -> Self {
         let die = roll.die();
         let roll_type = roll.roll_type();
-        let bonus = roll.modifier();
+        let modifier = roll.modifier();
 
         let n = match roll_type {
             RollType::Normal => roll.amount(),
@@ -66,30 +66,30 @@ impl From<&Roll> for RollResult {
             RollType::Disadvantage => *rolls.iter().min().unwrap(),
         };
 
-        let total = if bonus >= 0 {
-            total.saturating_add(bonus as usize)
+        let total = if modifier >= 0 {
+            total.saturating_add(modifier as usize)
         } else {
-            total.saturating_sub((-bonus) as usize)
+            total.saturating_sub((-modifier) as usize)
         };
 
         Self {
             rolls,
             die,
             total,
-            modifier: bonus,
+            modifier,
         }
     }
 }
 
 impl std::fmt::Display for RollResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}{}: {:?} = {}",
-            self.rolls().len(),
-            self.die(),
-            self.rolls(),
-            self.total()
-        )
+        write!(f, "{}{}: {:?}", self.rolls.len(), self.die, self.rolls)?;
+
+        if self.modifier != 0 {
+            let sign = if self.modifier > 0 { '+' } else { '-' };
+            write!(f, " {} {}", sign, self.modifier.abs())?;
+        }
+
+        write!(f, " = {}", self.total)
     }
 }
