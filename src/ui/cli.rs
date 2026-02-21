@@ -22,6 +22,7 @@ impl Cli {
                 return Ok(RollExpr::Single(Roll::new_with_type(
                     Die::D20,
                     self.roll_type(),
+                    0,
                 )));
             }
 
