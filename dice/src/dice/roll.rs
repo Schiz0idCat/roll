@@ -1,7 +1,7 @@
 use super::parser::RollParser;
 use super::{Die, RollResult, RollType, Rollable};
+use crate::parser::errors::RollParserError;
 
-use std::convert::Infallible;
 use std::str::FromStr;
 
 /// Represents a dice roll configuration.
@@ -96,10 +96,10 @@ impl From<RollParser> for Roll {
 }
 
 impl FromStr for Roll {
-    type Err = Infallible;
+    type Err = RollParserError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let parser = RollParser::from_str(s).unwrap();
+        let parser = RollParser::from_str(s)?;
 
         Ok(Roll::from(parser))
     }

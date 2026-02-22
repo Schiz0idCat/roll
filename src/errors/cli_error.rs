@@ -1,4 +1,4 @@
-use dice::errors::DieError;
+use dice::{errors::DieError, parser::errors::RollParserError};
 
 use thiserror::Error;
 
@@ -12,6 +12,9 @@ pub enum CliError {
 
     #[error("Parse die error. Valid formats: NdM - dM - M")]
     ParseDie,
+
+    #[error(transparent)]
+    RollParserError(#[from] RollParserError),
 
     #[error("advantage or disadvantage rolls may use at most 2 dice")]
     InvalidAdvantageMultiplicity,

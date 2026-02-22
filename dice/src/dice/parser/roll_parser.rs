@@ -39,7 +39,7 @@ impl FromStr for RollParser {
         let extra = Extra::try_from(components)?;
 
         if amount > 2 && (extra.advantage || extra.disadvantage) {
-            panic!("adv/dis require at most 2 dice")
+            return Err(RollParserError::InvalidAdvantageMultiplicity);
         }
 
         Ok(Self { die, amount, extra })

@@ -40,7 +40,7 @@ impl Cli {
         let mut rolls = Vec::with_capacity(self.dice.len());
 
         for dice in &self.dice {
-            rolls.push(Roll::from_str(dice).unwrap());
+            rolls.push(Roll::from_str(dice)?);
         }
 
         let rolls = RollSet::new(rolls);

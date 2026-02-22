@@ -1,12 +1,12 @@
 use super::Component;
-use super::errors::{ComponentError, ComponentsError};
+use super::errors::ComponentError;
 
 use std::str::FromStr;
 
 pub struct Components(Vec<Component>);
 
 impl FromStr for Components {
-    type Err = ComponentsError;
+    type Err = ComponentError;
 
     fn from_str(mut input: &str) -> Result<Self, Self::Err> {
         let mut components = Vec::new();

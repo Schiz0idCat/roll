@@ -1,5 +1,5 @@
 use super::super::Component;
-use super::{ComponentsError, ExtraError};
+use super::{ComponentError, ExtraError};
 use crate::errors::DieError;
 
 use thiserror::Error;
@@ -7,7 +7,7 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 pub enum RollParserError {
     #[error(transparent)]
-    Component(#[from] ComponentsError),
+    Component(#[from] ComponentError),
 
     #[error(transparent)]
     Extra(#[from] ExtraError),
@@ -35,4 +35,7 @@ pub enum RollParserError {
 
     #[error("These are mutually exclusive components: {0} - {1}")]
     ConflictingComponents(Component, Component),
+
+    #[error("advantage or disadvantage rolls may use at most 2 dice")]
+    InvalidAdvantageMultiplicity,
 }
