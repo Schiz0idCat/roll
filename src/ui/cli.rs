@@ -8,15 +8,15 @@ use std::str::FromStr;
 #[derive(Parser)]
 pub struct Cli {
     #[arg(
-        short = 'a',
-        long = "advantage",
+        short,
+        help = "advantage roll (2d20 and take the highest result)",
         conflicts_with_all = ["disadvantage", "dice"]
     )]
     advantage: bool,
 
     #[arg(
-        short = 'd',
-        long = "disadvantage",
+        short,
+        help = "disadvantage roll (2d20 and take the lowest result)",
         conflicts_with_all = ["advantage", "dice"]
     )]
     disadvantage: bool,
