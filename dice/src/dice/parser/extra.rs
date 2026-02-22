@@ -1,4 +1,4 @@
-use super::errors::ExtraError;
+use super::errors::ComponentError;
 use super::{Component, Components};
 
 pub struct Extra {
@@ -8,7 +8,7 @@ pub struct Extra {
 }
 
 impl TryFrom<Components> for Extra {
-    type Error = ExtraError;
+    type Error = ComponentError;
 
     fn try_from(components: Components) -> Result<Self, Self::Error> {
         let mut advantage = false;
@@ -19,7 +19,7 @@ impl TryFrom<Components> for Extra {
             match component {
                 Component::Advantage => {
                     if disadvantage {
-                        return Err(ExtraError::ConflictingComponents(
+                        return Err(ComponentError::ConflictingComponents(
                             Component::Advantage,
                             Component::Disadvantage,
                         ));
@@ -29,7 +29,7 @@ impl TryFrom<Components> for Extra {
                 }
                 Component::Disadvantage => {
                     if advantage {
-                        return Err(ExtraError::ConflictingComponents(
+                        return Err(ComponentError::ConflictingComponents(
                             Component::Disadvantage,
                             Component::Advantage,
                         ));

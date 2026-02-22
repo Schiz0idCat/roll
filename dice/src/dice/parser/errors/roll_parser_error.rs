@@ -1,5 +1,4 @@
-use super::super::Component;
-use super::{ComponentError, ExtraError};
+use super::ComponentError;
 use crate::errors::DieError;
 
 use thiserror::Error;
@@ -10,31 +9,16 @@ pub enum RollParserError {
     Component(#[from] ComponentError),
 
     #[error(transparent)]
-    Extra(#[from] ExtraError),
-
-    #[error("Cannot parse an empty die.")]
-    EmptyDie,
-
-    #[error("A die must have sides.")]
-    NoSides,
-
-    #[error("Modifier must be a valid integer.")]
-    InvalidModifier,
-
-    #[error("Parse die error. Valid formats: NdM - dM - M.")]
-    ParseDie,
+    Die(#[from] DieError),
 
     #[error("Couldn't parse int.")]
     ParseInt(#[from] std::num::ParseIntError),
 
-    #[error(transparent)]
-    Die(#[from] DieError),
+    #[error("Cannot parse an empty die.")]
+    EmptyDie,
 
-    #[error("Component {0} is not recognized.")]
-    InvalidComponent(String),
-
-    #[error("These are mutually exclusive components: {0} - {1}")]
-    ConflictingComponents(Component, Component),
+    #[error("A die must have sides. Valid formats: [NdM, dM, M].")]
+    NoSides,
 
     #[error("advantage or disadvantage rolls may use at most 2 dice")]
     InvalidAdvantageMultiplicity,
