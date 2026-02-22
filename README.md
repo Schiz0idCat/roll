@@ -5,7 +5,8 @@ Supports:
 - Standard dice: `d4`, `d6`, `d8`, `d10`, `d12`, `d20`, `d100`.
 - Multiple dice: `8d6`, `2d8`, etc.
 - Advantage and Disadvantage rolls.
-- Heterogeneous roll sets (`3d6 2d8 1d10`)
+- Heterogeneous roll sets (`3d6 2d8 1d10`).
+- Parsing for extra dice utilities.
 
 ---
 
