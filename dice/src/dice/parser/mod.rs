@@ -7,6 +7,6 @@ mod split;
 
 use component::Component;
 use components::Components;
-pub use extra::Extra;
+use extra::Extra;
 pub use roll_parser::RollParser;
 use split::Split;
