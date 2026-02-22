@@ -12,11 +12,11 @@ impl RollSet {
     /// # Example
     ///
     /// ```
-    /// use dice::{RollSet, Roll, Die};
+    /// use dice::{RollSet, Roll, Die, Rollable};
     ///
     /// let set = RollSet::new(vec![
-    ///     Roll::new(2, Die::D6),
-    ///     Roll::new(1, Die::D20),
+    ///     Roll::new(2, Die::D6, 0),
+    ///     Roll::new(1, Die::D20, 0),
     /// ]);
     ///
     /// let result = set.roll();

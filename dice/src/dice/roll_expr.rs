@@ -10,9 +10,9 @@ use super::{Roll, RollOutput, RollSet, Rollable};
 /// # Example
 ///
 /// ```
-/// use dice::{RollExpr, Roll, Die};
+/// use dice::{RollExpr, Roll, Die, Rollable};
 ///
-/// let expr = RollExpr::Single(Roll::new(1, Die::D6));
+/// let expr = RollExpr::Single(Roll::new(1, Die::D6, 0));
 /// let result = expr.roll();
 /// ```
 pub enum RollExpr {
