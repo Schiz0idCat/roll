@@ -31,7 +31,7 @@ cargo build --release
 
 | Component    | Syntax                           | Description                            | Example        |
 | :---         | :---                             | :---                                   | :---           |
-| die          | {int}'d'{int} / 'd'{int} / {int} | A single die.                          | 1d20, d12, d8  |
+| die          | {int}'d'{int} / 'd'{int} / {int} | A single die.                          | 1d20, d12, 8   |
 | advantage    | 'adv'                            | Roll 2 dice and take the highest value | 1d20adv        |
 | disadvantage | 'dis'                            | Roll 2 dice and take the lower value   | 1d20dis        |
 | modifier     | +{int} / -{int}                  | Modify the final value                 | 1d12+3, 1d12-5 |
