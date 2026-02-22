@@ -14,9 +14,8 @@ Supports:
 - [Features](#Dice)
 - [Installation](#Installation)
 - [Usage](#usage)
-  - [Basic Rolls](#basic-rolls)
-  - [Multiple Rolls](#multiple-rolls)
-  - [Advantage / Disadvantage](#advantage-/-disadvantage-rolls)
+  - [Parsing](#parsing)
+  - [Examples](#examples)
 
 ---
 
