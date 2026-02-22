@@ -29,12 +29,16 @@ impl Cli {
     pub fn try_parse(&self) -> Result<RollExpr, CliError> {
         let roll_type = self.roll_type();
 
-        if roll_type != RollType::Normal {
-            return Ok(RollExpr::Single(Roll::new_with_type(
-                Die::D20,
-                roll_type,
-                0,
-            )));
+        if self.dice.is_empty() {
+            if roll_type != RollType::Normal {
+                return Ok(RollExpr::Single(Roll::new_with_type(
+                    Die::D20,
+                    roll_type,
+                    0,
+                )));
+            }
+
+            return Err(CliError::NoDie);
         }
 
         let mut rolls = Vec::with_capacity(self.dice.len());
@@ -45,9 +49,7 @@ impl Cli {
 
         let rolls = RollSet::new(rolls);
 
-        if rolls.rolls().len() == 0 {
-            Err(CliError::NoDie)
-        } else if rolls.rolls().len() == 1 {
+        if rolls.rolls().len() == 1 {
             Ok(RollExpr::Single(rolls.rolls()[0].clone()))
         } else {
             Ok(RollExpr::Set(rolls))
