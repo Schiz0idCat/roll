@@ -45,7 +45,9 @@ impl Cli {
 
         let rolls = RollSet::new(rolls);
 
-        if rolls.rolls().len() == 1 {
+        if rolls.rolls().len() == 0 {
+            Err(CliError::NoDie)
+        } else if rolls.rolls().len() == 1 {
             Ok(RollExpr::Single(rolls.rolls()[0].clone()))
         } else {
             Ok(RollExpr::Set(rolls))
