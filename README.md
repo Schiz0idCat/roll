@@ -28,25 +28,50 @@ cargo build --release
 ```
 
 # Usage
-## Basic rolls
-```bash
-roll 1d6
-roll 3d12
-roll d4     # amount is optional
-roll 20     # if the amount is not specified, the 'd' is optional
-```
+## Parsing
 
-## Multiple rolls
-```bash
-roll 1d6 3d12 1d4 1d20
-roll 1d6 3d12 d4 20     # you can mix the syntax
-```
+| Component    | Syntax                           | Description                            | Example        |
+| :---         | :---                             | :---                                   | :---           |
+| die          | {int}'d'{int} / 'd'{int} / {int} | A single die.                          | 1d20, d12, d8  |
+| advantage    | 'adv'                            | Roll 2 dice and take the highest value | 1d20adv        |
+| disadvantage | 'dis'                            | Roll 2 dice and take the lower value   | 1d20dis        |
+| modifier     | +{int} / -{int}                  | Modify the final value                 | 1d12+3, 1d12-5 |
 
-## Advantage / Disadvantage rolls
-```bash
-roll -a 2d20
-roll --advantage d20
 
-roll -d 20
-roll --disadvantage      # if no die specified, use a d20 by default 
+## Examples
+```bash
+#====> SIMPLE ROLLS <=====#
+❯ ./roll 2d20adv
+2d20: [17, 13] = 17
+
+❯ ./roll 2d20dis    # for adv/dis rolls, amount may be not specified, 1 or 2
+2d20: [20, 6] = 6
+
+❯ ./roll 3d8
+3d8: [3, 8, 1] = 12
+
+❯ ./roll 4d6+5
+4d6: [5, 4, 6, 4] + 5 = 24
+
+❯ ./roll 4d6-3
+4d6: [6, 2, 3, 5] - 3 = 13
+
+❯ ./roll 4d6-3+5-1  # you can use multiple modifiers
+4d6: [2, 6, 5, 3] + 1 = 17
+
+#====> ARGUMENTS ROLLS <=====#
+# you can use quick arguments for adv/dis rolling
+❯ ./roll -a
+2d20: [4, 14] = 14
+
+❯ ./roll -d
+2d20: [5, 13] = 5
+
+#====> SET OF ROLLS <=====#
+❯ ./roll 12 d20adv+3 3d4-2
+1d12: [1] = 1
+2d20: [20, 20] + 3 = 23
+3d4: [2, 2, 3] - 2 = 5
+
+Total: 29 # sum of every roll
 ```
