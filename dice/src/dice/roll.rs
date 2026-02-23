@@ -135,7 +135,7 @@ mod tests {
         assert!(result.rolls()[0] >= 1 && result.rolls()[0] <= 20);
         assert!(result.rolls()[1] >= 1 && result.rolls()[1] <= 20);
         assert!(result.total() >= 1 && result.total() <= 20);
-        assert!(result.total() == *result.rolls().iter().max().unwrap() as isize);
+        assert!(result.total() == *result.rolls().iter().max().unwrap());
     }
 
     #[test]
@@ -145,6 +145,6 @@ mod tests {
         assert!(result.rolls()[0] >= 1 && result.rolls()[0] <= 20);
         assert!(result.rolls()[1] >= 1 && result.rolls()[1] <= 20);
         assert!(result.total() >= 1 && result.total() <= 20);
-        assert!(result.total() == *result.rolls().iter().min().unwrap() as isize);
+        assert!(result.total() == *result.rolls().iter().min().unwrap());
     }
 }
