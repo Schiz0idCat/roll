@@ -64,6 +64,21 @@ impl TryFrom<usize> for Die {
 impl std::str::FromStr for Die {
     type Err = DieError;
 
+    /// Attempts to convert a str into a [`Die`].
+    ///
+    /// Returns [`DieError`] if the number does not match a supported die.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use dice::Die;
+    /// use std::str::FromStr;
+    ///
+    /// let d20 = Die::from_str("20").unwrap();
+    ///
+    /// assert_eq!(d20, Die::D20);
+    /// assert_eq!(d20.sides(), 20);
+    /// ```
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "4" => Ok(Die::D4),
