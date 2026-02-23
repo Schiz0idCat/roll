@@ -2,9 +2,23 @@ use super::errors::ComponentError;
 use super::{Component, Components};
 
 pub struct Extra {
-    pub advantage: bool,
-    pub disadvantage: bool,
-    pub modifier: isize,
+    advantage: bool,
+    disadvantage: bool,
+    modifier: isize,
+}
+
+impl Extra {
+    pub fn advantage(&self) -> bool {
+        self.advantage
+    }
+
+    pub fn disadvantage(&self) -> bool {
+        self.disadvantage
+    }
+
+    pub fn modifier(&self) -> isize {
+        self.modifier
+    }
 }
 
 impl TryFrom<Components> for Extra {

@@ -2,9 +2,9 @@ use std::convert::Infallible;
 use std::str::FromStr;
 
 pub struct Split {
-    pub amount: Option<String>,
-    pub sides: Option<String>,
-    pub components: Option<String>,
+    amount: Option<String>,
+    sides: Option<String>,
+    components: Option<String>,
 }
 
 impl Split {
@@ -14,6 +14,18 @@ impl Split {
             sides,
             components,
         }
+    }
+
+    pub fn amount(&self) -> &Option<String> {
+        &self.amount
+    }
+
+    pub fn sides(&self) -> &Option<String> {
+        &self.sides
+    }
+
+    pub fn components(&self) -> &Option<String> {
+        &self.components
     }
 }
 

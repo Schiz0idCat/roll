@@ -79,14 +79,14 @@ impl Rollable for Roll {
 
 impl From<RollParser> for Roll {
     fn from(parser: RollParser) -> Self {
-        let amount = parser.amount;
-        let die = parser.die;
-        let roll_type = match (parser.extra.advantage, parser.extra.disadvantage) {
+        let amount = parser.amount();
+        let die = parser.die();
+        let roll_type = match (parser.extra().advantage(), parser.extra().disadvantage()) {
             (true, false) => RollType::Advantage,
             (false, true) => RollType::Disadvantage,
             _ => RollType::Normal,
         };
-        let modifier = parser.extra.modifier;
+        let modifier = parser.extra().modifier();
 
         match roll_type {
             RollType::Normal => Self::new(amount, die, modifier),
