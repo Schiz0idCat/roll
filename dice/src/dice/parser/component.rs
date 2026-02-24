@@ -3,7 +3,7 @@ use super::errors::ComponentError;
 use std::fmt::Display;
 use std::str::FromStr;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Component {
     Advantage,
     Disadvantage,

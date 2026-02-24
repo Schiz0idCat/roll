@@ -2,7 +2,7 @@ use super::super::Component;
 
 use thiserror::Error;
 
-#[derive(Debug, Error)]
+#[derive(Debug, Error, PartialEq)]
 pub enum ComponentError {
     #[error("Modifier must be a valid integer.")]
     InvalidModifier,

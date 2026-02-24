@@ -8,14 +8,6 @@ pub struct Split {
 }
 
 impl Split {
-    fn new(amount: Option<String>, sides: Option<String>, components: Option<String>) -> Self {
-        Self {
-            amount,
-            sides,
-            components,
-        }
-    }
-
     pub fn amount(&self) -> &Option<String> {
         &self.amount
     }
@@ -52,6 +44,36 @@ impl FromStr for Split {
         // extra parameters
         let components = (!components.is_empty()).then_some(components.to_string());
 
-        Ok(Split::new(amount, sides, components))
+        Ok(Self {
+            amount,
+            sides,
+            components,
+        })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn split() {
+        let split = Split::from_str("1d20adv+5").unwrap();
+
+        assert_eq!(split.amount, Some("1".to_string()));
+        assert_eq!(split.sides, Some("20".to_string()));
+        assert_eq!(split.components, Some("adv+5".to_string()));
+
+        let split = Split::from_str("1d20").unwrap();
+
+        assert_eq!(split.amount, Some("1".to_string()));
+        assert_eq!(split.sides, Some("20".to_string()));
+        assert_eq!(split.components, None);
+
+        let split = Split::from_str("d20").unwrap();
+
+        assert_eq!(split.amount, None);
+        assert_eq!(split.sides, Some("20".to_string()));
+        assert_eq!(split.components, None);
     }
 }

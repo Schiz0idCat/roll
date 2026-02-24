@@ -1,6 +1,7 @@
 use super::errors::ComponentError;
 use super::{Component, Components};
 
+#[derive(Debug)]
 pub struct Extra {
     advantage: bool,
     disadvantage: bool,
@@ -60,5 +61,29 @@ impl TryFrom<Components> for Extra {
             disadvantage,
             modifier,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::str::FromStr;
+
+    #[test]
+    fn read_components() {
+        let components = Components::from_str("advadv+5-2").unwrap();
+        let extra = Extra::try_from(components).unwrap();
+
+        assert_eq!(extra.advantage(), true);
+        assert_eq!(extra.disadvantage(), false);
+        assert_eq!(extra.modifier(), 3);
+
+        let components = Components::from_str("disadv-2").unwrap();
+        let extra = Extra::try_from(components).unwrap_err();
+
+        assert_eq!(
+            extra,
+            ComponentError::ConflictingComponents(Component::Advantage, Component::Disadvantage)
+        )
     }
 }
